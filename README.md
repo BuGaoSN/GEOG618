@@ -32,6 +32,16 @@ select
 
 [2.1.1.csv](https://github.com/BuGaoSN/GEOG618/files/10904557/2.1.1.csv)
 
+## Question 4
+
+```sql
+SELECT id, lon, lat, st_distance(ST_SetSRID(ST_MakePoint(lon,lat),4326), St_setSRID(st_makepoint(-80.5652469954505,43.59640273366601),4326)) as distance
+FROM ways_vertices_pgr
+ORDER BY distance
+ASC LIMIT 1;
+```
+
+
 ### Question 2
 
 ```sql
@@ -194,3 +204,26 @@ Overall, OSM's topological features provide a more flexible and versatile approa
 A database view is a subset of a database that represents a specific portion of data obtained from one or more database tables. These views are named queries stored in the database and can be used to simplify complex queries, improve data security, ensure data consistency, improve performance, and simplify application development.
 
 Views can simplify complex queries by providing an intuitive interface to the underlying data and hiding the complexity of table structures and relationships. They can also be used to restrict access to sensitive data by limiting user access to certain columns and rows. Views help enforce data consistency by providing a standardized way of accessing and updating data across multiple tables. Views can improve performance by precomputing complex queries and storing the results, which reduces the processing required to execute complex queries and improves response times. Lastly, views can simplify application development by providing a consistent and predictable way of accessing data, reducing the amount of code needed to build applications and improving overall performance.
+
+## Question 4
+
+As shown in the figure, I selected the Woolwich Memorial Centre in Elmira as the reference point with coordinates "-80.5652469954505,43.59640273366601".
+
+<img width="952" alt="1678158478409" src="https://user-images.githubusercontent.com/98428762/223310314-905ccaf5-b1bb-48a6-a083-6f16ffca726d.png">
+
+```sql
+SELECT id, lon, lat, st_distance(ST_SetSRID(ST_MakePoint(lon,lat),4326), St_setSRID(st_makepoint(-80.5652469954505,43.59640273366601),4326)) as distance
+FROM ways_vertices_pgr
+ORDER BY distance
+ASC LIMIT 1;
+```
+
+<img width="492" alt="1678158798055" src="https://user-images.githubusercontent.com/98428762/223311069-f80a3dc1-e69e-4c44-84ff-2a7973cc0bd8.png">
+
+<img width="438" alt="1678158892435" src="https://user-images.githubusercontent.com/98428762/223311332-5a0de55e-39a9-4cfe-a36f-18ccccd7faac.png">
+
+This code uses the function ST_MakePoint(lon, lat) to generate the geometry of the point with longitude and latitude values from two different sources - the ways_vertices_pgr table and a newly selected point. The spatial reference system identifier is set to 4326 using the ST_SetSRID function, which corresponds to the WGS 84 coordinate system used by GPS.
+
+Using the ST_Distance(... , ...) calculates the distance between the given point and each node in the table and sorts the results in ascending order of distance using the ORDER BY clause.
+
+Finally, LIMIT 1 is used to return only the nearest node.
